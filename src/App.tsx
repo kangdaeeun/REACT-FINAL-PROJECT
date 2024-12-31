@@ -13,14 +13,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
-          <Route path={"/"} element={<Home />} />
-          <Route path={"/feeds/:id"} element={<Detail />} />
-          <Route path={"/feeds/create"} element={<CreatePage />} />
-          <Route path={"/feeds/update/:id"} element={<UpdatePage />} />
-          <Route path={"/mypage"} element={<MyPage />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/feeds/:id" element={<Detail />} />
+          <Route path="/feeds/create" element={<CreatePage />} />
+          <Route path="/feeds/update/:id" element={<UpdatePage />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Route>
-        <Route path={"/signup"} element={<Signup />} />
-        <Route path={"/login"} element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </BrowserRouter>
   );
