@@ -16,4 +16,6 @@ screen은 부모태그 관계없이 100vh(view height) 즉, 보이는 화면 전
 tailwind 커스텀 색 넣고 사용하는 방법 배움
 tailwind.config.js 에 extend:{} 안에 colors:{} 안에 내가 사용할 색 이름을 만들어서 값을 지정해주고 그 색 이름을 사용하면 된다!!!
 
+Day 3 SignUp
+참고 : 베이직반 8회차 (2024/11/18) - 회원가입
 
