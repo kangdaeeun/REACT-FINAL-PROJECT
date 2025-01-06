@@ -39,3 +39,9 @@ null value in column "img_url" of relation "users" violates not-null constraint
 supabase public-users 콜롬 설정에서 Allow Nullable 체크를 안해서 이런 오류가 떴었음 -> 체크를 해서 이미지 값이 null 이어도 가능함을 설정해주었음
 
 css width, height 값을 정할 때 부모태그에서 너비를 지정해야 그 안에서 조절할 수 있다는 걸 아는데 잘 안돼서 문제점을 찾아보니 tailwind는 공식문서에 나와있는 값만 사용할 수 있음 공식문서에 없는 값을 사용하고 싶을 땐 대괄호[]를 사용해서 그 안에 값을 넣어서 사용하면 된다.!!!! ex w-[500px]
+
+Day 4 login
+supabase.auth.onAuthStateChange
+실시간 인증상태 감지 - 사용자가 로그인 / 로그아웃하거나 세션이 갱신될 때 이벤트 감지
+UI 동기화 - 인증 상태에 따라 화면(UI)을 업데이트하여 사용자 경험을 개선
+자동 세션 관리 - 세션이 만료되었거나 로그아웃된 경우, 자동으로 사용자 상태를 감지하고 리다이렉트할 수 있음
