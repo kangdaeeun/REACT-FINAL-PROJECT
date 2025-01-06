@@ -91,7 +91,7 @@ const Signup = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="text-2xl font-bold">SignUp</div>
+      <h1 className="text-2xl font-bold">SignUp</h1>
       <div className="p-1 m-1 w-3/4 h-2/3 border-2 border-solid rounded border-selected-white">
         <form
           onSubmit={signUpNewUser}
@@ -108,7 +108,7 @@ const Signup = () => {
             />
             <input
               className="border-2 border-gray-mint rounded-md p-2 hover:border-black-blue hover:border-2"
-              type="text"
+              type="email"
               placeholder="email"
               value={email}
               onChange={onChangeEmail}
@@ -132,14 +132,14 @@ const Signup = () => {
             />
             <p className="flex justify-around">
               <button
-                className="className=py-2 px-4 bg-blue-400 rounded-md text-black hover:bg-selected-white"
+                className="py-2 px-4 bg-blue-400 rounded-md text-black hover:bg-selected-white"
                 type="submit"
               >
                 SIGN UP
               </button>
               <Link
                 to="/"
-                className="className=py-2 px-4 bg-gray-mint rounded-md text-black hover:bg-selected-white"
+                className="py-2 px-4 bg-gray-mint rounded-md text-black hover:bg-selected-white"
               >
                 BACK
               </Link>
