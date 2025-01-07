@@ -91,7 +91,7 @@ const Signup = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <div className="text-2xl font-bold">회원가입</div>
+      <h1 className="text-2xl font-bold">SignUp</h1>
       <div className="p-1 m-1 w-3/4 h-2/3 border-2 border-solid rounded border-selected-white">
         <form
           onSubmit={signUpNewUser}
@@ -101,15 +101,15 @@ const Signup = () => {
             <input
               className="border-2 border-gray-mint rounded-md p-2 hover:border-black-blue hover:border-2"
               type="text"
-              placeholder="닉네임"
+              placeholder="nickname"
               value={nickname}
               onChange={onChangeNickname}
               required
             />
             <input
               className="border-2 border-gray-mint rounded-md p-2 hover:border-black-blue hover:border-2"
-              type="text"
-              placeholder="이메일"
+              type="email"
+              placeholder="email"
               value={email}
               onChange={onChangeEmail}
               required
@@ -117,7 +117,7 @@ const Signup = () => {
             <input
               className="border-2 border-gray-mint rounded-md p-2 hover:border-black-blue hover:border-2"
               type="password"
-              placeholder="비밀번호"
+              placeholder="password"
               value={password}
               onChange={onChangePassword}
               required
@@ -125,23 +125,23 @@ const Signup = () => {
             <input
               className="border-2 border-gray-mint rounded-md p-2 hover:border-black-blue hover:border-2"
               type="password"
-              placeholder="비밀번호 확인"
+              placeholder="check password"
               value={checkPassword}
               onChange={onChangeCheckPassword}
               required
             />
             <p className="flex justify-around">
               <button
-                className="className=py-2 px-4 bg-blue-400 text-white rounded-md text-black hover:bg-selected-white"
+                className="py-2 px-4 bg-blue-400 rounded-md text-black hover:bg-selected-white"
                 type="submit"
               >
-                회원가입
+                SIGN UP
               </button>
               <Link
                 to="/"
-                className="className=py-2 px-4 bg-gray-mint text-white rounded-md text-black hover:bg-selected-white"
+                className="py-2 px-4 bg-gray-mint rounded-md text-black hover:bg-selected-white"
               >
-                뒤로 가기
+                BACK
               </Link>
             </p>
           </div>
