@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import supabase from "../utils/supabase";
+import useAuthStore from "../stores/useAuthStroe";
 
 const Header = () => {
-  // const user = {
-  //   nickname: "홍길동",
-  // };
-  const user = null;
+  const { user } = useAuthStore();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
 
+    alert("로그아웃 되었습니다")
     navigate("/");
   };
 
@@ -44,10 +43,15 @@ const Header = () => {
             </>
           ) : (
             <>
-              <button onClick={() => navigate("/mypage")} className="text-sm text-selected-white">MyPage</button>
+              <button
+                onClick={() => navigate("/mypage")}
+                className="text-sm text-selected-white hover:text-black"
+              >
+                {user.nickname}
+              </button>
               <button
                 onClick={handleLogout}
-                className="text-sm text-selected-white border border-selected-white rounded-lg px-4 py-2 hover:bg-white font-medium"
+                className="text-sm text-selected-white border border-selected-white rounded-lg px-4 py-2 hover:bg-red-500 font-medium"
               >
                 Logout
               </button>
