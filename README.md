@@ -33,7 +33,7 @@ const { data, error } = await supabase.auth.signUp(
 외국인이 작성한 로직이었는데 자세히 보니 However, there is not documentation about it. 라고... 
 튜터님의 라이브 코딩으로 공식문서에 있는 방법으로 고침 공식문서 짱!
 
-회원가입 기능을 구현했는데 오류가 뜸 supabase에 users 오타로 인해 undefind 가 뜨다가 고쳤더니 다시
+회원가입 기능을 구현했는데 오류가 뜸 supabase에 users 오타로 인해 undefined 가 뜨다가 고쳤더니 다시
 null value in column "img_url" of relation "users" violates not-null constraint
 이런 오류가 뜸 유저스에 이미지 콜롬이 널 값이기 때문에 안된다 라는 것 하지만 회원가입시 이미지를 넣지 않기 때문에 supabase설정에서 널 값을 허용토록 변경해야한다
 supabase public-users 콜롬 설정에서 Allow Nullable 체크를 안해서 이런 오류가 떴었음 -> 체크를 해서 이미지 값이 null 이어도 가능함을 설정해주었음
