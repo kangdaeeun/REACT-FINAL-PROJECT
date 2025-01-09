@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import supabase from "../utils/supabase";
-import useAuthStore from "../stores/useAuthStroe";
+import useAuthStore from "../stores/useAuthStore";
 
 const Header = () => {
   const { user } = useAuthStore();
@@ -8,7 +8,7 @@ const Header = () => {
   const handleLogout = async () => {
     await supabase.auth.signOut();
 
-    alert("로그아웃 되었습니다")
+    alert("로그아웃 되었습니다");
     navigate("/");
   };
 

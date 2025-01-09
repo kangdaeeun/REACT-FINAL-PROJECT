@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import useAuthStore from "../stores/useAuthStroe";
 import supabase from "../utils/supabase";
+import useAuthStore from "../stores/useAuthStore";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { setUser } = useAuthStore();
