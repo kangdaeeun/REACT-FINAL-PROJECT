@@ -1,10 +1,23 @@
 import { Link } from "react-router-dom";
 import { FaAngleUp, FaCommentDots } from "react-icons/fa";
+import Comment from "../components/Comment";
+import CommentForm from "../components/CommentForm";
 
 const Detail = () => {
   return (
-    <div>
-      <Link to="/">back</Link>
+    <div className="flex flex-col gap-8">
+      {/* 뒤로가기 버튼 & 수정, 삭제 버튼 */}
+      <div className="flex justify-between items-center">
+        <Link to="/" className="flex gap-2 text-sm">
+          <span className="text-black-blue font-bold">{`<`}</span>
+          <span className="text-black-blue">BACK</span>
+        </Link>
+        {/* 수정, 삭제 버튼 */}
+        <div className="flex gap-2">
+          <Link to="/feeds/update/1" className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue">수정</Link>
+          <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">삭제</button>
+        </div>
+      </div>
       <div className="flex justify-between bg-selected-white shadow-md p-6 rounded-lg">
         <div>
           <button className="p-3 bg-gray-100 rounded-lg text-sm flex flex-col items-center gap-1 text-blue-950">
@@ -24,110 +37,15 @@ const Detail = () => {
           <div className="font-bold">1</div>
         </div>
       </div>
-      <h3 className="my-2">4 Comments</h3>
-      <div className="flex flex-col p-6 bg-selected-white rounded-lg shadow-md">
-        <div className="my-2">
-          <div className="flex flex-row justify-between items-center gap-4">
-            <span>
-              <img
-                src="/logo.png"
-                alt="logo"
-                className="w-14 h-14 border-2 border-gray-mint rounded-full"
-              />
-            </span>
-            <div className="flex-1">
-              <h3 className="font-bold">nickname1</h3>
-              <h3>comments1</h3>
-            </div>
-            <div className="text-xs font-bold">
-              <button className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue">
-                수정
-              </button>
-              <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
-                삭제
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="my-2">
-          <div className="flex flex-row justify-between items-center gap-4">
-            <span>
-              <img
-                src="/logo.png"
-                alt="logo"
-                className="w-14 h-14 border-2 border-gray-mint rounded-full"
-              />
-            </span>
-            <div className="flex-1">
-              <h3 className="font-bold">email2@email.com</h3>
-              <h3>comments2</h3>
-            </div>
-            <div className="text-xs font-bold">
-              <button className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue">
-                수정
-              </button>
-              <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
-                삭제
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="my-2">
-          <div className="flex flex-row justify-between items-center gap-4">
-            <span>
-              <img
-                src="/logo.png"
-                alt="logo"
-                className="w-14 h-14 border-2 border-gray-mint rounded-full"
-              />
-            </span>
-            <div className="flex-1">
-              <h3 className="font-bold">nickname3</h3>
-              <h3>comments3</h3>
-            </div>
-            <div className="text-xs font-bold">
-              <button className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue">
-                수정
-              </button>
-              <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
-                삭제
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="my-2">
-          <div className="flex flex-row justify-between items-center gap-4">
-            <span>
-              <img
-                src="/logo.png"
-                alt="logo"
-                className="w-14 h-14 border-2 border-gray-mint rounded-full"
-              />
-            </span>
-            <div className="flex-1">
-              <h3 className="font-bold">email4@email.com</h3>
-              <h3>comments4</h3>
-            </div>
-            <div className="text-xs font-bold">
-              <button className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue">
-                수정
-              </button>
-              <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
-                삭제
-              </button>
-            </div>
-          </div>
-        </div>
+      {/* 댓글 목록 */}
+      <div className="flex flex-col p-6 my-6 bg-selected-white rounded-lg shadow-md">
+        <h3 className="my-2">4 Comments</h3>
+        <Comment />
+        <Comment />
+        <Comment />
       </div>
-      <div className="flex flex-col bg-selected-white shadow-md p-6 my-6 rounded-lg">
-        <h3 className="">댓글 작성</h3>
-        <input type="text" className="my-4 border-2 w-full h-auto" />
-        <div className="flex w-full justify-end">
-          <button className="bg-gray-mint rounded-md w-[60px] h-[30px] hover:bg-black-blue">
-            작성
-          </button>
-        </div>
-      </div>
+      {/* 댓글 작성 폼 */}
+      <CommentForm />
     </div>
   );
 };
