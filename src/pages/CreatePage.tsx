@@ -1,8 +1,9 @@
+import FeedForm from "../components/FeedForm";
 
 const CreatePage = () => {
   return (
-    <div>CreatePage</div>
-  )
-}
+    <FeedForm purpose="작성"/>
+  );
+};
 
-export default CreatePage
+export default CreatePage;
