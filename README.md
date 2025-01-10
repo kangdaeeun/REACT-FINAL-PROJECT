@@ -82,3 +82,6 @@ CSS 너무 어렵고 헷갈린다 내가 하고 싶은 정렬은 한 태그 안�
 flex-row 일 경우 justify-center를 사용하면 된다.
 flex-col 일 경우 text-align: center;을 사용하면 된다. (tailwind언어로 text-center)
 이게 flex-row 일 때와 flex-col 일 때의 기준이 달라버려서 그거에 맞는 정렬을 둬야한다.
+
+재사용성
+너무 어렵다
