@@ -92,11 +92,9 @@ Feed.tsx에서 data.map is not a function 이라는 오류 발생
 console.log로 찍어보니 역시나 data는 배열이 아니였고 data를 가져온 Api에서 res를 console로 찍어보니
 여기서부터 문제였다. 즉, Api를 가져오는 함수부터가 잘못되었다.
 const res = await instance.get("/posts");
-여기 res가 잘못 불러오고 있음을 알 수 있었는데.. 
-수업 내용이 react-query에서 axios를 사용해서 나도 axios를 사용했다. 근데 이 axios를 사용하지 말고 그냥 supabase를 사용하는 걸로 바꿔보자.
-supabase에서 데이터 가져오기 위해서 from().select().eq()를 사용하는데 내가 생각한 id와 
-
-
+문제. axios로 사용함 즉, 불러오는 방법부터 잘못됨
+해결. supabase로 제대로 불러오기 (supabase.from().select()) > useQuery로 사용하기
+사용방법을 제대로 숙지할 것. 코드 제대로 사용할 것
 
 
 
