@@ -1,11 +1,12 @@
 import supabase from "../utils/supabase";
 
-export const getUpVotes = async () => {
-  const { data, error } = await supabase.from("upVotes").select("*");
+export const getUpVotesCount = async (feedId: string) => {
+  const { count, error } = await supabase
+    .from("upvotes")
+    .select("*", { count: "exact", head: true })
+    .eq("feed_id", feedId);
   if (error) {
-    throw new Error(
-      `upvote 조회 하는 중 에러가 발생했습니다. ${error.message}`
-    );
+    throw new Error("좋아요 조회 실패");
   }
-  return data;
+  return count;
 };

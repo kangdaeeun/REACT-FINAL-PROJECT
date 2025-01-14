@@ -1,11 +1,11 @@
 import supabase from "../utils/supabase";
 
-export const getComments = async () => {
-  const { data, error } = await supabase.from("comments").select("*");
+export const getCommentsCount = async (feedId: string) => {
+  const { count, error } = await supabase
+    .from("comments")
+    .select("*", { count: "exact", head: true }).eq("feed_id", feedId)
   if (error) {
-    throw new Error(
-      `comment 조회하는 중 에러가 발생했습니다. ${error.message}`
-    );
+    throw new Error("댓글 조회 실패");
   }
-  return data;
+  return count;
 };
