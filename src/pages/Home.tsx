@@ -4,13 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getFeeds } from "../api/feedApi";
 
 const Home = () => {
-  const {data, isLoading, error} = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["feeds"],
     queryFn: getFeeds,
-  })
+  });
 
-  if (isLoading) return <div>로딩 중 ...</div>
-	if (error) return <div>에러 발생: {error.message}</div>
+  if (isLoading) return <div>로딩 중 ...</div>;
+  if (error) return <div>에러 발생: {error.message}</div>;
 
   return (
     <>
@@ -24,7 +24,7 @@ const Home = () => {
         </Link>
       </div>
       <div className="flex flex-col gap-4">
-        {data?.map((item)=> (
+        {data?.map((item) => (
           <Feed key={item.id} feed={item} />
         ))}
       </div>

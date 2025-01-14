@@ -96,6 +96,9 @@ const res = await instance.get("/posts");
 해결. supabase로 제대로 불러오기 (supabase.from().select()) > useQuery로 사용하기
 사용방법을 제대로 숙지할 것. 코드 제대로 사용할 것
 
+Day 10 250114 Tanstack Query2
+
+
 
 
 
