@@ -85,3 +85,24 @@ flex-col 일 경우 text-align: center;을 사용하면 된다. (tailwind언어�
 
 재사용성
 너무 어렵다
+
+Day 9 250113 Tanstack Query1
+Feed.tsx에서 data.map is not a function 이라는 오류 발생
+검색해보니 X.map()은 배열 메서드인데 그렇다면 X는 배열이 아니다
+console.log로 찍어보니 역시나 data는 배열이 아니였고 data를 가져온 Api에서 res를 console로 찍어보니
+여기서부터 문제였다. 즉, Api를 가져오는 함수부터가 잘못되었다.
+const res = await instance.get("/posts");
+문제. axios로 사용함 즉, 불러오는 방법부터 잘못됨
+해결. supabase로 제대로 불러오기 (supabase.from().select()) > useQuery로 사용하기
+사용방법을 제대로 숙지할 것. 코드 제대로 사용할 것
+
+
+
+
+
+
+
+
+
+
+
