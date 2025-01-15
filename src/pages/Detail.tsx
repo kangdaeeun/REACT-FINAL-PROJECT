@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaAngleUp, FaCommentDots } from "react-icons/fa";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
 
 const Detail = () => {
+  const { id } = useParams();
+
   return (
     <div className="flex flex-col gap-8">
       {/* 뒤로가기 버튼 & 수정, 삭제 버튼 */}
@@ -14,8 +16,15 @@ const Detail = () => {
         </Link>
         {/* 수정, 삭제 버튼 */}
         <div className="flex gap-2">
-          <Link to="/feeds/update/1" className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue">수정</Link>
-          <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">삭제</button>
+          <Link
+            to="/feeds/update/1"
+            className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue"
+          >
+            수정
+          </Link>
+          <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
+            삭제
+          </button>
         </div>
       </div>
       <div className="flex justify-between bg-selected-white shadow-md p-6 rounded-lg">

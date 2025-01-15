@@ -98,6 +98,8 @@ const res = await instance.get("/posts");
 
 Day 10 250114 Tanstack Query2
 
+Day 11 250115 상세 페이지 데이터 불러오기
+참고 : 베이직 10회 차 수업 - 상세 페이지 이동하기
 
 
 

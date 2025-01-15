@@ -25,7 +25,7 @@ const Feed = ({ feed }: { feed: FeedProps }) => {
 
   return (
     <Link
-      to="/feeds/1"
+      to="/feeds/:id"
       className="flex flex-row justify-between bg-selected-white shadow-md p-6 rounded-lg"
     >
       <>
