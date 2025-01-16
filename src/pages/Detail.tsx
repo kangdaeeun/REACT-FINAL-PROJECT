@@ -3,27 +3,16 @@ import { Link, useParams } from "react-router-dom";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
 import { getFeedById } from "../api/feedApi";
-import Feed from "../components/Feed";
-import { getCommentsCount } from "../api/commentApi";
-
-export interface FeedProps {
-  id: string;
-  title: string;
-  content: string;
-  created_at: string;
-  user_id: string;
-}
+import { getCommentsByFeedId } from "../api/commentApi";
+import { getUpVotesCount } from "../api/upvoteApi";
+import { FaAngleUp, FaCommentDots } from "react-icons/fa";
 
 const Detail = () => {
   // 주소에 있는 id 가져오기
   const { id } = useParams();
 
   // id를 이용하여 api 요쳥하기
-  const {
-    data: feed,
-    isLoading,
-    error,
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["feeds", id],
     queryFn: () => {
       if (!id) {
@@ -33,14 +22,26 @@ const Detail = () => {
     },
   });
 
-  // 댓글 수 가져오기
-  const { data: commentsCount, isLoading: isCommnetsLoading } = useQuery({
-    queryKey: ["comments", id], // api 요청에 대한 이름짓기
+  // 게시글의 id가 일치하는 댓글들을 가져온다.
+  const { data: comments, isLoading: isCommnetsLoading } = useQuery({
+    // 이름표
+    // 리액트 쿼리 개발자들이 이 이름표 이용 > 캐싱(임시저장)
+    queryKey: ["feeds", id, "comments"],   
     queryFn: () => {
       if (!id) {
         throw new Error("id가 없습니다.");
       }
-      return getCommentsCount(id);
+      return getCommentsByFeedId(id);
+    },
+  });
+
+  const { data: upvotesCount, isLoading: isUpvotesLoading } = useQuery({
+    queryKey: ["upvotes", id],
+    queryFn: () => {
+      if (!id) {
+        throw new Error("id가 없습니다.");
+      }
+      return getUpVotesCount(id);
     },
   });
 
@@ -68,16 +69,53 @@ const Detail = () => {
           </button>
         </div>
       </div>
-      {/* feed */}
-      <Feed feed={feed} />
+      {/* 글 내용 */}
+      <div className="flex flex-row bg-selected-white rounded-lg shadow-md p-6">
+        <div>
+          <button className="p-3 bg-gray-100 rounded-lg text-sm flex flex-col items-center gap-1 text-blue-950">
+            <FaAngleUp className="text-xs text-center font-bold" />
+            <div className="font-bold">
+              {isUpvotesLoading ? (
+                <div className="animate-pulse w-4 h-4 bg-slate-200 rounded-full"></div>
+              ) : (
+                upvotesCount
+              )}
+            </div>
+          </button>
+        </div>
+        <div className="flex-1 px-10 min-x-0 flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <h2 className="text-blue-950 text-xl font-bold">{data.title}</h2>
+            <p className="text-gray-600 truncate text-md">{data.content}</p>
+          </div>
+          <p className="text-right text-xs text-gray-600">
+            작성일: {new Date(data.created_at).toLocaleDateString()}
+          </p>
+        </div>
+        <div className="flex items-center gap-1 p-3 text-gray-600">
+          <FaCommentDots className="text-gray-500 font-bold text-xl" />
+          <div className="font-bold">
+            {isCommnetsLoading ? (
+              <div className="animate-pulse w-4 h-4 bg-slate-200 rounded-full"></div>
+            ) : (
+              comments?.length
+            )}
+          </div>
+        </div>
+      </div>
       {/* 댓글 목록 */}
       <div className="flex flex-col p-6 my-6 bg-selected-white rounded-lg shadow-md">
         <h3 className="my-2">
-          {isCommnetsLoading ? "..." : commentsCount} Comments
+          {isCommnetsLoading ? (
+            <div className="animate-pulse w-4 h-4 bg-slate-200 rounded-full"></div>
+          ) : (
+            comments?.length
+          )}{" "}
+          Comments
         </h3>
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments?.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
+        ))}
       </div>
       {/* 댓글 작성 폼 */}
       <CommentForm />

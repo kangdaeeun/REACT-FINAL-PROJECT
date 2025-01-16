@@ -2,24 +2,26 @@ import { useQuery } from "@tanstack/react-query";
 import { FaAngleUp, FaCommentDots } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { getUpVotesCount } from "../api/upvoteApi";
-import { FeedProps } from "../pages/Detail";
 import { getCommentsCount } from "../api/commentApi";
 
-const Feed = ({ feed }: { feed: FeedProps }) => {
-  const { data: upvotesCount, isLoading: isUpvotesLoading } = useQuery({
-    queryKey: ["upvotes", feed.id],
-    queryFn: () => getUpVotesCount(feed.id),
-  });
+interface FeedProps {
+  id: string;
+  title: string;
+  content: string;
+  created_at: string;
+  user_id: string;
+}
 
+const Feed = ({ feed }: { feed: FeedProps }) => {
   // 댓글 수 가져오기
   const { data: commentsCount, isLoading: isCommnetsLoading } = useQuery({
     queryKey: ["comments", feed.id], // api 요청에 대한 이름짓기
-    queryFn: () => {
-      if (!feed.id) {
-        throw new Error("id가 없습니다.");
-      }
-      return getCommentsCount(feed.id);
-    },
+    queryFn: () => getCommentsCount(feed.id),
+  });
+
+  const { data: upvotesCount, isLoading: isUpvotesLoading } = useQuery({
+    queryKey: ["upvotes", feed.id],
+    queryFn: () => getUpVotesCount(feed.id),
   });
 
   return (
