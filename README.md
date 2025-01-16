@@ -105,9 +105,10 @@ useParams 에서 id는 string | undefined 인데
 강제로 타입 지정하거나 (id!) id가 없을리가 없어!! - 권장하지 않음
 에러를 줘서 해결하는 방법이 있다
 
+Day 12 250116 
+오류 발생 : React Hook "useQuery" is called conditionally. React Hooks must be called in the exact same order in every component render. Did you accidentally call a React Hook after an early return?
 
-
-
+isLoading 대신 isPending 사용하기
 
 
 

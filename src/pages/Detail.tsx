@@ -1,22 +1,46 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
-import { FaAngleUp, FaCommentDots } from "react-icons/fa";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import { useQuery } from "@tanstack/react-query";
 import { getFeedById } from "../api/feedApi";
+import Feed from "../components/Feed";
+import { getCommentsCount } from "../api/commentApi";
+
+export interface FeedProps {
+  id: string;
+  title: string;
+  content: string;
+  created_at: string;
+  user_id: string;
+}
 
 const Detail = () => {
   // 주소에 있는 id 가져오기
   const { id } = useParams();
 
   // id를 이용하여 api 요쳥하기
-  const { data, isLoading, error } = useQuery({
+  const {
+    data: feed,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["feeds", id],
     queryFn: () => {
       if (!id) {
         throw new Error("id가 없습니다.");
       }
       return getFeedById(id);
+    },
+  });
+
+  // 댓글 수 가져오기
+  const { data: commentsCount, isLoading: isCommnetsLoading } = useQuery({
+    queryKey: ["comments", id], // api 요청에 대한 이름짓기
+    queryFn: () => {
+      if (!id) {
+        throw new Error("id가 없습니다.");
+      }
+      return getCommentsCount(id);
     },
   });
 
@@ -44,28 +68,13 @@ const Detail = () => {
           </button>
         </div>
       </div>
-      <div className="flex justify-between bg-selected-white shadow-md p-6 rounded-lg">
-        <div>
-          <button className="p-3 bg-gray-100 rounded-lg text-sm flex flex-col items-center gap-1 text-blue-950">
-            <FaAngleUp className="text-xs text-center font-bold" />
-            <div className="font-bold">1</div>
-          </button>
-        </div>
-        <div className="flex-1 px-10 min-x-0 flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <h2 className="text-blue-950 text-xl font-bold">{data.title}</h2>
-            <p className="text-gray-600 truncate text-md">{data.content}</p>
-          </div>
-          <p className="text-right text-xs text-gray-600">작성일: {new Date(data.created_at).toLocaleDateString()}</p>
-        </div>
-        <div className="flex items-center gap-1 p-3 text-gray-600">
-          <FaCommentDots className="text-gray-500 font-bold text-xl" />
-          <div className="font-bold">1</div>
-        </div>
-      </div>
+      {/* feed */}
+      <Feed feed={feed} />
       {/* 댓글 목록 */}
       <div className="flex flex-col p-6 my-6 bg-selected-white rounded-lg shadow-md">
-        <h3 className="my-2">4 Comments</h3>
+        <h3 className="my-2">
+          {isCommnetsLoading ? "..." : commentsCount} Comments
+        </h3>
         <Comment />
         <Comment />
         <Comment />

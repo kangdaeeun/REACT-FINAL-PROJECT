@@ -36,7 +36,7 @@ const FeedForm = ({ purpose }: { purpose: string }) => {
         <div className="flex flex-row gap-2">
             <Btn BtnName="수정하기" />
           <Link
-            to="/feeds/1"
+            to="/feeds/{`/feeds/${feed.id}`}"
             className="text-lg font-bold bg-red-500 rounded-md w-full h-[35px] hover:bg-selected-white flex justify-center items-center"
           >
             취소하기
