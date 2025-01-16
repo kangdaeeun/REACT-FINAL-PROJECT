@@ -1,9 +1,11 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
-import { FaAngleUp, FaCommentDots } from "react-icons/fa";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import { useQuery } from "@tanstack/react-query";
 import { getFeedById } from "../api/feedApi";
+import { getCommentsByFeedId } from "../api/commentApi";
+import { getUpVotesCount } from "../api/upvoteApi";
+import { FaAngleUp, FaCommentDots } from "react-icons/fa";
 
 const Detail = () => {
   // 주소에 있는 id 가져오기
@@ -17,6 +19,29 @@ const Detail = () => {
         throw new Error("id가 없습니다.");
       }
       return getFeedById(id);
+    },
+  });
+
+  // 게시글의 id가 일치하는 댓글들을 가져온다.
+  const { data: comments, isLoading: isCommnetsLoading } = useQuery({
+    // 이름표
+    // 리액트 쿼리 개발자들이 이 이름표 이용 > 캐싱(임시저장)
+    queryKey: ["feeds", id, "comments"],   
+    queryFn: () => {
+      if (!id) {
+        throw new Error("id가 없습니다.");
+      }
+      return getCommentsByFeedId(id);
+    },
+  });
+
+  const { data: upvotesCount, isLoading: isUpvotesLoading } = useQuery({
+    queryKey: ["upvotes", id],
+    queryFn: () => {
+      if (!id) {
+        throw new Error("id가 없습니다.");
+      }
+      return getUpVotesCount(id);
     },
   });
 
@@ -44,11 +69,18 @@ const Detail = () => {
           </button>
         </div>
       </div>
-      <div className="flex justify-between bg-selected-white shadow-md p-6 rounded-lg">
+      {/* 글 내용 */}
+      <div className="flex flex-row bg-selected-white rounded-lg shadow-md p-6">
         <div>
           <button className="p-3 bg-gray-100 rounded-lg text-sm flex flex-col items-center gap-1 text-blue-950">
             <FaAngleUp className="text-xs text-center font-bold" />
-            <div className="font-bold">1</div>
+            <div className="font-bold">
+              {isUpvotesLoading ? (
+                <div className="animate-pulse w-4 h-4 bg-slate-200 rounded-full"></div>
+              ) : (
+                upvotesCount
+              )}
+            </div>
           </button>
         </div>
         <div className="flex-1 px-10 min-x-0 flex flex-col gap-4">
@@ -56,19 +88,34 @@ const Detail = () => {
             <h2 className="text-blue-950 text-xl font-bold">{data.title}</h2>
             <p className="text-gray-600 truncate text-md">{data.content}</p>
           </div>
-          <p className="text-right text-xs text-gray-600">작성일: {new Date(data.created_at).toLocaleDateString()}</p>
+          <p className="text-right text-xs text-gray-600">
+            작성일: {new Date(data.created_at).toLocaleDateString()}
+          </p>
         </div>
         <div className="flex items-center gap-1 p-3 text-gray-600">
           <FaCommentDots className="text-gray-500 font-bold text-xl" />
-          <div className="font-bold">1</div>
+          <div className="font-bold">
+            {isCommnetsLoading ? (
+              <div className="animate-pulse w-4 h-4 bg-slate-200 rounded-full"></div>
+            ) : (
+              comments?.length
+            )}
+          </div>
         </div>
       </div>
       {/* 댓글 목록 */}
       <div className="flex flex-col p-6 my-6 bg-selected-white rounded-lg shadow-md">
-        <h3 className="my-2">4 Comments</h3>
-        <Comment />
-        <Comment />
-        <Comment />
+        <h3 className="my-2">
+          {isCommnetsLoading ? (
+            <div className="animate-pulse w-4 h-4 bg-slate-200 rounded-full"></div>
+          ) : (
+            comments?.length
+          )}{" "}
+          Comments
+        </h3>
+        {comments?.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
+        ))}
       </div>
       {/* 댓글 작성 폼 */}
       <CommentForm />

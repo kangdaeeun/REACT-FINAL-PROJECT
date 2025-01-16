@@ -13,6 +13,7 @@ interface FeedProps {
 }
 
 const Feed = ({ feed }: { feed: FeedProps }) => {
+  // 댓글 수 가져오기
   const { data: commentsCount, isLoading: isCommnetsLoading } = useQuery({
     queryKey: ["comments", feed.id], // api 요청에 대한 이름짓기
     queryFn: () => getCommentsCount(feed.id),
@@ -32,7 +33,9 @@ const Feed = ({ feed }: { feed: FeedProps }) => {
         <div>
           <button className="p-3 bg-gray-100 rounded-lg text-sm flex flex-col items-center gap-1 text-blue-950">
             <FaAngleUp className="text-xs text-center font-bold" />
-            <div className="font-bold">{isUpvotesLoading ? "..." : upvotesCount}</div>
+            <div className="font-bold">
+              {isUpvotesLoading ? "..." : upvotesCount}
+            </div>
           </button>
         </div>
         <div className="flex-1 px-10 min-x-0 flex flex-col gap-4">
@@ -46,7 +49,9 @@ const Feed = ({ feed }: { feed: FeedProps }) => {
         </div>
         <div className="flex items-center gap-1 p-3 text-gray-600">
           <FaCommentDots className="text-gray-500 font-bold text-xl" />
-          <div className="font-bold">{isCommnetsLoading ? "..." : commentsCount}</div>
+          <div className="font-bold">
+            {isCommnetsLoading ? "..." : commentsCount}
+          </div>
         </div>
       </>
     </Link>
