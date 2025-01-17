@@ -15,12 +15,12 @@ interface FeedProps {
 const Feed = ({ feed }: { feed: FeedProps }) => {
   // 댓글 수 가져오기
   const { data: commentsCount, isLoading: isCommnetsLoading } = useQuery({
-    queryKey: ["comments", feed.id], // api 요청에 대한 이름짓기
+    queryKey: ["comments", feed.id, "count"],
     queryFn: () => getCommentsCount(feed.id),
   });
 
   const { data: upvotesCount, isLoading: isUpvotesLoading } = useQuery({
-    queryKey: ["upvotes", feed.id],
+    queryKey: ["upvotes", feed.id, "count"],
     queryFn: () => getUpVotesCount(feed.id),
   });
 
