@@ -14,7 +14,7 @@ interface FeedProps {
 
 const Feed = ({ feed }: { feed: FeedProps }) => {
   const { data: commentsCount, isLoading: isCommnetsLoading } = useQuery({
-    queryKey: ["comments", feed.id],
+    queryKey: ["comments", feed.id], // api 요청에 대한 이름짓기
     queryFn: () => getCommentsCount(feed.id),
   });
 
@@ -25,7 +25,7 @@ const Feed = ({ feed }: { feed: FeedProps }) => {
 
   return (
     <Link
-      to="/feeds/1"
+      to={`/feeds/${feed.id}`}
       className="flex flex-row justify-between bg-selected-white shadow-md p-6 rounded-lg"
     >
       <>

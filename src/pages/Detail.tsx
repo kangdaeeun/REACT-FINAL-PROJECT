@@ -1,9 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaAngleUp, FaCommentDots } from "react-icons/fa";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
+import { useQuery } from "@tanstack/react-query";
+import { getFeedById } from "../api/feedApi";
 
 const Detail = () => {
+  // 주소에 있는 id 가져오기
+  const { id } = useParams();
+
+  // id를 이용하여 api 요쳥하기
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["feeds", id],
+    queryFn: () => {
+      if (!id) {
+        throw new Error("id가 없습니다.");
+      }
+      return getFeedById(id);
+    },
+  });
+
+  if (isLoading) return <div>로딩 중...</div>;
+  if (error) return <div>에러 발생: {error.message}</div>;
+
   return (
     <div className="flex flex-col gap-8">
       {/* 뒤로가기 버튼 & 수정, 삭제 버튼 */}
@@ -14,8 +33,15 @@ const Detail = () => {
         </Link>
         {/* 수정, 삭제 버튼 */}
         <div className="flex gap-2">
-          <Link to="/feeds/update/1" className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue">수정</Link>
-          <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">삭제</button>
+          <Link
+            to="/feeds/update/1"
+            className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue"
+          >
+            수정
+          </Link>
+          <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
+            삭제
+          </button>
         </div>
       </div>
       <div className="flex justify-between bg-selected-white shadow-md p-6 rounded-lg">
@@ -27,10 +53,10 @@ const Detail = () => {
         </div>
         <div className="flex-1 px-10 min-x-0 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <h2 className="text-blue-950 text-xl font-bold">제목</h2>
-            <p className="text-gray-600 truncate text-md">내용</p>
+            <h2 className="text-blue-950 text-xl font-bold">{data.title}</h2>
+            <p className="text-gray-600 truncate text-md">{data.content}</p>
           </div>
-          <p className="text-right text-xs text-gray-600">작성일: 2024.10.24</p>
+          <p className="text-right text-xs text-gray-600">작성일: {new Date(data.created_at).toLocaleDateString()}</p>
         </div>
         <div className="flex items-center gap-1 p-3 text-gray-600">
           <FaCommentDots className="text-gray-500 font-bold text-xl" />
