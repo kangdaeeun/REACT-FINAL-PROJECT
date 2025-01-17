@@ -38,7 +38,7 @@ const Comment = ({ comment }: { comment: CommentProps }) => {
             </h3>
             <h3>{comment.content}</h3>
           </div>
-          <div className="text-xs font-bold items-end">
+          <div className="flex text-xs font-bold items-end gap-2">
             <button className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue">
               수정
             </button>

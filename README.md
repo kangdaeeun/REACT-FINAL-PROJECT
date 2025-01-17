@@ -110,6 +110,9 @@ Day 12 250116
 
 isLoading 대신 isPending 사용하기
 
+Day 13 250117 mutation1
+참고 : 베이직반 12회차 수업 - react-query로 서버 상태 관리하기
+
 
 
 
