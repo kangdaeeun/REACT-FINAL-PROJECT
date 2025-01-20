@@ -51,6 +51,7 @@ const Detail = () => {
   // 2. 내가 좋아요 했는지 확인
   const isUpvotedByMe = upvotes?.some((upvote) => upvote.user_id === user?.id);
 
+  // useQueryClient로 queryClient 변수 생성
   const queryClient = useQueryClient();
   // 3. 좋아요 추가 혹은 삭제
   const toggleMutation = useMutation({

@@ -1,4 +1,8 @@
 import { IoPersonCircleOutline } from "react-icons/io5";
+import useAuthStore from "../stores/useAuthStore";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getFeedById } from "../api/feedApi";
 
 interface CommentProps {
   id: string;
@@ -15,6 +19,24 @@ interface CommentProps {
 }
 
 const Comment = ({ comment }: { comment: CommentProps }) => {
+  // 주소에 있는 id 가져오기
+  const { id } = useParams();
+  const { user } = useAuthStore();
+
+  // id를 이용하여 api 요쳥하기
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["feeds", id],
+    queryFn: () => {
+      if (!id) {
+        throw new Error("id가 없습니다.");
+      }
+      return getFeedById(id);
+    },
+  });
+
+  if (isLoading) return <div>로딩 중...</div>;
+  if (error) return <div>에러 발생: {error.message}</div>;
+
   return (
     <>
       <div className="my-2">
@@ -38,13 +60,20 @@ const Comment = ({ comment }: { comment: CommentProps }) => {
             </h3>
             <h3>{comment.content}</h3>
           </div>
-          <div className="flex text-xs font-bold items-end gap-2">
-            <button className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue">
-              수정
-            </button>
-            <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
-              삭제
-            </button>
+          <div>
+            {/* 내 댓글에만 수정, 삭제 버튼 뜨게 하는 작업 */}
+            {user !== data.id ? (
+              ""
+            ) : (
+              <div className="flex text-xs font-bold items-end gap-2">
+                <button className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue">
+                  수정
+                </button>
+                <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
+                  삭제
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <hr className="my-2 border-t border-selected-gray" />
