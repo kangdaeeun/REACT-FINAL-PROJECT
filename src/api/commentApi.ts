@@ -20,25 +20,22 @@ export const getCommentsByFeedId = async (feedId: string) => {
   return data;
 };
 
-// 댓글 추가하기
+// 댓글 추가하기 (시간은 실시간으로 적용되게 설정해서 안 써도 됨)
 export const addComment = async ({
   feedId,
   userId,
   content,
-  createdAt,
 }: {
-  feedId: string | undefined;
-  userId: string | undefined;
+  feedId: string;
+  userId: string;
   content: string;
-  createdAt: number;
 }) => {
   const { error } = await supabase
     .from("comments")
     .insert({
       feed_id: feedId,
       user_id: userId,
-      content: content,
-      created_at: createdAt,
+      content,
     });
   if (error) throw new Error(`댓글 추가 실패: ${error.message}`);
 };

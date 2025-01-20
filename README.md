@@ -113,6 +113,8 @@ isLoading 대신 isPending 사용하기
 Day 13 250117 mutation1
 참고 : 베이직반 12회차 수업 - react-query로 서버 상태 관리하기
 
+Day 14 250120 mutation2
+props로 주는거 잊지 말기!
 
 
 
