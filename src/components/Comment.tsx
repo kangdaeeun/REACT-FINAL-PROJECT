@@ -1,5 +1,7 @@
 import { IoPersonCircleOutline } from "react-icons/io5";
 import useAuthStore from "../stores/useAuthStore";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteComment } from "../api/commentApi";
 
 interface CommentProps {
   id: string;
@@ -17,6 +19,27 @@ interface CommentProps {
 
 const Comment = ({ comment }: { comment: CommentProps }) => {
   const { user } = useAuthStore();
+
+  const queryClient = useQueryClient();
+
+  const deleteCommentMutation = useMutation({
+    mutationFn: () => deleteComment(comment.id),
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["feeds", comment.feed_id, "comments"],
+      });
+    },
+
+    onError: (error) => {
+      alert(error.message);
+    },
+  });
+
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    deleteCommentMutation.mutate();
+  };
 
   return (
     <>
@@ -48,7 +71,10 @@ const Comment = ({ comment }: { comment: CommentProps }) => {
                 <button className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue">
                   수정
                 </button>
-                <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
+                <button
+                  onClick={handleDelete}
+                  className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white"
+                >
                   삭제
                 </button>
               </div>

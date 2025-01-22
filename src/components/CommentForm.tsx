@@ -45,13 +45,18 @@ const CommentForm = ({ feedId }: { feedId: string | undefined }) => {
     e.preventDefault();
     // supabase 코드
     addCommentMutation.mutate();
+    // setComment("");
   };
 
   return (
     <div className="flex flex-col bg-selected-white shadow-md p-6 my-6 rounded-lg">
       <h3 className="">댓글 작성</h3>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <textarea value={comment} onChange={handleChange} className="my-4 border-2 rounded-lg w-full h-[100px] resize-none" />
+        <textarea
+          value={comment}
+          onChange={handleChange}
+          className="my-4 border-2 rounded-lg w-full h-[100px] resize-none"
+        />
         <div className="flex w-full justify-end">
           <button
             type="submit"
