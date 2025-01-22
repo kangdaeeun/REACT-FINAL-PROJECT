@@ -19,3 +19,23 @@ export const getCommentsByFeedId = async (feedId: string) => {
   if (error) throw new Error("댓글 조회 실패");
   return data;
 };
+
+// 댓글 추가하기 (시간은 실시간으로 적용되게 설정해서 안 써도 됨)
+export const addComment = async ({
+  feedId,
+  userId,
+  content,
+}: {
+  feedId: string;
+  userId: string;
+  content: string;
+}) => {
+  const { error } = await supabase
+    .from("comments")
+    .insert({
+      feed_id: feedId,
+      user_id: userId,
+      content,
+    });
+  if (error) throw new Error(`댓글 추가 실패: ${error.message}`);
+};
