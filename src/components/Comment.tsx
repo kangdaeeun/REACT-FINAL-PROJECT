@@ -30,15 +30,12 @@ const Comment = ({ comment }: { comment: CommentProps }) => {
         queryKey: ["feeds", comment.feed_id, "comments"],
       });
     },
-
-    onError: (error) => {
-      alert(error.message);
-    },
   });
 
-  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    deleteCommentMutation.mutate();
+  const handleDelete = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      deleteCommentMutation.mutate();
+    }
   };
 
   return (

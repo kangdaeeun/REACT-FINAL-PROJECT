@@ -34,6 +34,7 @@ const CommentForm = ({ feedId }: { feedId: string | undefined }) => {
       queryClient.invalidateQueries({
         queryKey: ["feeds", feedId, "comments"],
       });
+      setComment("");
     },
 
     onError: (error) => {
@@ -45,7 +46,6 @@ const CommentForm = ({ feedId }: { feedId: string | undefined }) => {
     e.preventDefault();
     // supabase 코드
     addCommentMutation.mutate();
-    // setComment("");
   };
 
   return (
