@@ -36,12 +36,12 @@ const CommentForm = ({ feedId }: { feedId: string | undefined }) => {
       });
       setComment("");
     },
-
+    
     onError: (error) => {
       alert(error.message);
     },
   });
-
+  
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // supabase 코드

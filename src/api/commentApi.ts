@@ -47,3 +47,18 @@ export const deleteComment = async (commentId: string) => {
     .eq("id", commentId);
   if (error) throw new Error(`댓글 삭제 실패: ${error.message}`);
 };
+
+// 댓글 수정
+export const editComment = async ({
+  content,
+  commentId,
+}: {
+  content: string;
+  commentId: string;
+}) => {
+  const { error } = await supabase
+    .from("comments")
+    .update({ content })
+    .eq("id", commentId);
+  if (error) throw new Error(`댓글 수정 실패: ${error.message}`);
+};
