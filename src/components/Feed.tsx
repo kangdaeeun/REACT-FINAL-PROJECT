@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { getUpVotesCount } from "../api/upvoteApi";
 import { getCommentsCount } from "../api/commentApi";
 
-interface FeedProps {
+export interface FeedProps {
   id: string;
   title: string;
   content: string;
