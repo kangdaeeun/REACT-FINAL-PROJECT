@@ -11,7 +11,7 @@ const CreatePage = () => {
   const [content, setContent] = useState("");
   const navigate = useNavigate();
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(e.target.value);
   };
 
@@ -28,6 +28,7 @@ const CreatePage = () => {
       await addFeed({ title, content, userId: user.id });
     },
     onSuccess: () => {
+      alert("게시글이 등록 되었습니다.")
       // 페이지 이동
       navigate("/");
     },

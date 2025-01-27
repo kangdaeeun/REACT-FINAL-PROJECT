@@ -18,7 +18,7 @@ const Feed = ({ feed }: { feed: FeedProps }) => {
     queryKey: ["comments", feed.id, "count"],
     queryFn: () => getCommentsCount(feed.id),
   });
-
+  // 추천 수 가져오기
   const { data: upvotesCount, isLoading: isUpvotesLoading } = useQuery({
     queryKey: ["upvotes", feed.id, "count"],
     queryFn: () => getUpVotesCount(feed.id),

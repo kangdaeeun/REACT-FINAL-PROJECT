@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Btn from "./Btn";
 
 const FeedForm = ({
@@ -16,6 +16,13 @@ const FeedForm = ({
   handleContentChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }) => {
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    alert("게시글 수정이 취소되었습니다.")
+    navigate(-1)
+  }
+
   return (
     <form onSubmit={handleSubmit} className="flex flex-col text-center">
       {purpose === "작성" && (
@@ -53,12 +60,12 @@ const FeedForm = ({
       ) : (
         <div className="flex flex-row gap-2">
           <Btn BtnName="수정하기" />
-          <Link
-            to="/feeds/{`/feeds/${feed.id}`}"
+          <button type={"button"}
+            onClick={handleCancel}
             className="text-lg font-bold bg-red-500 rounded-md w-full h-[35px] hover:bg-selected-white flex justify-center items-center"
           >
             취소하기
-          </Link>
+          </button>
         </div>
       )}
     </form>

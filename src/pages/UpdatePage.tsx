@@ -1,46 +1,65 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FeedForm from "../components/FeedForm";
-import useAuthStore from "../stores/useAuthStore";
-import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateFeed } from "../api/feedApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getFeedById, updateFeed } from "../api/feedApi";
 
 const UpdatePage = () => {
-  const { user } = useAuthStore();
-  const [editTitle, setEditTitle] = useState();
-  const [editFeedContent, setEditFeedContent] = useState();
+  const {id} = useParams();
   const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
-  const handleEditTitleChange = () => {
-    setEditTitle();
+  const { data } = useQuery({
+    queryKey: ["feed", id],
+    queryFn: () => {
+      if(!id) {
+        throw new Error("id가 없습니다.")
+      }
+      return getFeedById(id)
+    }
+  })
+
+  useEffect(() => {
+    setTitle(data?.title || "");
+    setContent(data?.content || "");
+  }, [data])
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTitle(e.target.value);
   };
 
-  const handleEditContentChange = () => {
-    setEditFeedContent();
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
   };
-
-  const queryClient = useQueryClient();
 
   const editContentMutation = useMutation({
-    mutationFn: async () => {
-      if (!user) {
-        throw new Error("로그인 후 이용해 주세요")
+    mutationFn: () => {
+      if (!id) {
+        throw new Error("id가 없습니다.")
       }
-      await updateFeed({
-        userId: user.id,
-        content: editFeedContent,
-        title: editTitle,
-      }),
+      return updateFeed({id, content, title})
     },
+
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["feeds", ]
-      });
-      setEditTitle()
-      setEditFeedContent()
+      alert("게시글 수정이 완료되었습니다.")
+      navigate(`/feeds/${data.id}`)
+    },
+    onError: (error) => {
+      alert(error.message)
     }
   });
 
-  return <FeedForm purpose="" />;
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    editContentMutation.mutate();
+  }
+
+  return <FeedForm purpose=""
+  title={title}
+  content={content}
+  handleTitleChange={handleTitleChange}
+  handleContentChange={handleContentChange}
+  handleSubmit={handleSubmit} />;
 };
 export default UpdatePage;

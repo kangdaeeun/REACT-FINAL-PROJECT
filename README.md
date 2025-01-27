@@ -116,7 +116,15 @@ Day 13 250117 mutation1
 Day 14 250120 mutation2
 props로 주는거 잊지 말기!
 
-
+Day 18 250127 update-feed
+form 태그에 Submit 을 주어 작동을 하는데 이 Submit은 저장, 수정 과 같은 저장하는 기능으로 만들었는데 저장과 다른 취소하기 버튼에 다른 기능을 넣고 싶을 때는 그 버튼에 다른 타입을 주면 된다. ex: FeedForm.tsx에 
+<button type={"button"}
+            onClick={()=>navigate(-1)}
+            className="text-lg font-bold bg-red-500 rounded-md w-full h-[35px] hover:bg-selected-white flex justify-center items-center"
+          >
+            취소하기
+          </button>
+이렇게 타입을 따로 지정하면 된다.
 
 
 
