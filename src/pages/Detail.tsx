@@ -113,6 +113,20 @@ const Detail = () => {
               </button>
             </>
           ) : null}
+          {/* &&연산자로 앞 조건이 true면 뒷 태그를 렌더링, false면 안 보여줌 위와 기능은 같음 */}
+          {/* {user?.id === data?.user_id && (
+            <>
+              <Link
+                to={`/feeds/update/${data.id}`}
+                className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue"
+              >
+                수정
+              </Link>
+              <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
+                삭제
+              </button>
+            </>
+          )} */}
         </div>
       </div>
       {/* 글 내용 */}

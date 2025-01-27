@@ -10,6 +10,7 @@ const UpdatePage = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
+  // react-query를 이용한 데이터 가져오기
   const { data } = useQuery({
     queryKey: ["feed", id],
     queryFn: () => {
