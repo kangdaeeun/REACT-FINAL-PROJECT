@@ -40,3 +40,23 @@ export const addFeed = async ({
     throw new Error(`게시글 추가하는데 에러가 발생했습니다. ${error.message}`);
   }
 };
+
+// feed 수정
+export const updateFeed = async ({
+  id,
+  content,
+  title,
+}: {
+  id: string;
+  content: string;
+  title: string;
+}) => {
+  const { error } = await supabase
+    .from("feeds")
+    .update({ content, title })
+    .eq("id", id);
+
+  if (error) {
+    throw new Error(`게시글 수정하는데 에러가 발생했습니다. ${error.message}`);
+  }
+};

@@ -99,15 +99,20 @@ const Detail = () => {
         </Link>
         {/* 수정, 삭제 버튼 */}
         <div className="flex gap-2">
-          <Link
-            to="/feeds/update/1"
-            className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue"
-          >
-            수정
-          </Link>
-          <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
-            삭제
-          </button>
+          {/* 내 게시글일 때만 수정, 삭제 버튼이 뜨게 하기 */}
+          {user?.id === data?.user_id ? (
+            <>
+              <Link
+                to={`/feeds/update/${data.id}`}
+                className="bg-gray-mint rounded-md px-2 py-1 hover:bg-black-blue"
+              >
+                수정
+              </Link>
+              <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
+                삭제
+              </button>
+            </>
+          ) : null}
         </div>
       </div>
       {/* 글 내용 */}
