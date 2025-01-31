@@ -60,3 +60,12 @@ export const updateFeed = async ({
     throw new Error(`게시글 수정하는데 에러가 발생했습니다. ${error.message}`);
   }
 };
+
+// feed 삭제
+export const deleteFeed = async (id: string) => {
+  const { error } = await supabase.from("feeds").delete().eq("id", id);
+
+  if (error) {
+    throw new Error(`게시글 삭제하는데 에러가 발생했습니다. ${error.message}`);
+  }
+};

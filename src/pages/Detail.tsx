@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import { getFeedById } from "../api/feedApi";
+import { deleteFeed, getFeedById } from "../api/feedApi";
 import { getCommentsByFeedId } from "../api/commentApi";
 import { getUpvotesByFeedId, toggleUpvote } from "../api/upvoteApi";
 import { FaAngleUp, FaCommentDots } from "react-icons/fa";
@@ -12,6 +12,7 @@ const Detail = () => {
   // 주소에 있는 id 가져오기
   const { id } = useParams();
   const { user } = useAuthStore();
+  const navigate = useNavigate();
 
   // id를 이용하여 api 요쳥하기
   const { data, isLoading, error } = useQuery({
@@ -86,6 +87,28 @@ const Detail = () => {
     },
   });
 
+  // mutation을 이용한 삭제로직
+  const deleteFeedMutation = useMutation({
+    mutationFn: async () => {
+      if (!id) {
+        alert("id가 없습니다.");
+        return;
+      }
+      await deleteFeed(id);
+    },
+    onSuccess: () => {
+      alert("게시글이 삭제 되었습니다.");
+      // 삭제 후 홈으로 이동
+      navigate("/");
+    },
+  });
+
+  const handleDelete = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      deleteFeedMutation.mutate();
+    }
+  };
+
   if (isLoading) return <div>로딩 중...</div>;
   if (error) return <div>에러 발생: {error.message}</div>;
 
@@ -108,7 +131,10 @@ const Detail = () => {
               >
                 수정
               </Link>
-              <button className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white">
+              <button
+                onClick={handleDelete}
+                className="bg-red-500 rounded-md px-2 py-1 hover:bg-selected-white"
+              >
                 삭제
               </button>
             </>
