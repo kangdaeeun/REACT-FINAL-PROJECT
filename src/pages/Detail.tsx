@@ -91,22 +91,28 @@ const Detail = () => {
   const deleteFeedMutation = useMutation({
     mutationFn: async () => {
       if (!id) {
-        alert("id가 없습니다.");
-        return;
+        throw new Error("id가 없습니다.");
       }
-      await deleteFeed(id);
+      if (!user) {
+        throw new Error("user 정보가 없습니다.");
+      }
+      await deleteFeed({ id, userId: user.id });
     },
     onSuccess: () => {
       alert("게시글이 삭제 되었습니다.");
       // 삭제 후 홈으로 이동
       navigate("/");
     },
+    onError: (error) => {
+      alert(`삭제 실패: ${error.message}`);
+    },
   });
 
   const handleDelete = () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      deleteFeedMutation.mutate();
+    if (!window.confirm("정말 삭제하시겠습니까?")) {
+      return;
     }
+    deleteFeedMutation.mutate();
   };
 
   if (isLoading) return <div>로딩 중...</div>;

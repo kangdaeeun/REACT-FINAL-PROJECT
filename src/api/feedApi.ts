@@ -62,8 +62,18 @@ export const updateFeed = async ({
 };
 
 // feed 삭제
-export const deleteFeed = async (id: string) => {
-  const { error } = await supabase.from("feeds").delete().eq("id", id);
+export const deleteFeed = async ({
+  id,
+  userId,
+}: {
+  id: string;
+  userId: string;
+}) => {
+  const { error } = await supabase
+    .from("feeds")
+    .delete()
+    .eq("id", id)
+    .eq("user_id", userId);
 
   if (error) {
     throw new Error(`게시글 삭제하는데 에러가 발생했습니다. ${error.message}`);
