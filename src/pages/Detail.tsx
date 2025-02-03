@@ -195,7 +195,7 @@ const Detail = () => {
             <div className="animate-pulse w-4 h-4 bg-slate-200 rounded-full"></div>
           ) : (
             comments?.length
-          )}{" "}
+          )}
           Comments
         </h3>
         {comments?.map((comment) => (
