@@ -52,6 +52,8 @@ const MyPage = () => {
         .upload(filePath, profileFile);
       if (error) {
         alert(`이미지 업로드에 실패했습니다. ${error.message}`);
+        setIsUploading(false);
+        return;
       }
 
       // 가져오는 방법
@@ -61,12 +63,14 @@ const MyPage = () => {
       // auth에도 넣어준다
       updateData.img_url = publicUrl;
     }
-
+    
     await supabase.auth.updateUser({ data: updateData });
-
+    
     // users 테이블에 넣는다
     await supabase.from("users").update(updateData).eq("id", user?.id);
     setIsUploading(false);
+    
+    alert("변경 완료")
   };
 
   return (
