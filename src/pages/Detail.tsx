@@ -40,7 +40,10 @@ const Detail = () => {
 
   // 1. 좋아요 데이터 가져오기
   const { data: upvotes, isLoading: isUpvotesLoading } = useQuery({
-    queryKey: ["upvotes", id],
+    // 쿼리키 계층화 전
+    // queryKey: ["upvotes", id],
+    // 퀴리키 계층화 후
+    queryKey: ["feeds", id, "upvotes"],
     queryFn: () => {
       if (!id) {
         throw new Error("id가 없습니다.");
@@ -57,19 +60,30 @@ const Detail = () => {
   // 3. 좋아요 추가 혹은 삭제
   const toggleMutation = useMutation({
     mutationFn: async () => {
+      // 에러 처리 통일화
       if (!user) {
-        alert("로그인 후 이용해주세요");
-        return;
+        // 적용 전
+        // alert("로그인 후 이용해주세요");
+        // return;
+        // 적용 후
+        throw new Error("로그인 후 이용해주세요.");
       }
 
       if (data.user_id === user.id) {
-        alert("자추 금지");
-        return;
+        // 적용 전
+        // alert("자추 금지");
+        // return;
+        // 적용 후
+        throw new Error("자주 금지");
       }
       // 내가 좋아요를 누른 적이 있는지 확인
       // 좋아요 데이터를 다 가져온 후 -> 내가 한 게 있는지 확인
       if (!id || isUpvotedByMe === undefined) {
-        return alert("좋아요 데이터를 불러오는 중 오류가 발생했습니다.");
+        // 적용 전
+        // return alert("좋아요 데이터를 불러오는 중 오류가 발생했습니다.");
+        // 적용 후
+        throw new Error("좋아요 데이터를 불러오는 중 오류가 발생했습니다.")
+        // return
       }
       // 내가 좋아요를 누른 상태면 -> 좋아요 취소
       // 내가 좋아요를 누르지 않은 상태면 -> 좋아요 추가
@@ -80,10 +94,14 @@ const Detail = () => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["upvotes", id] });
+      // 쿼리키 계층화 적용 전
+      // queryClient.invalidateQueries({ queryKey: ["upvotes", id] });
+      // 쿼리키 계층화 적용 후
+      queryClient.invalidateQueries({queryKey: ["feeds", id, "upvotes"]})
     },
-    onError: () => {
-      alert("좋아요 추가 혹은 삭제 실패");
+    onError: (error) => {
+      // alert("좋아요 추가 혹은 삭제 실패");
+      alert(`좋아요 추가 혹은 삭제 실패: ${error.message}`)
     },
   });
 

@@ -109,18 +109,18 @@ const Comment = ({ comment }: { comment: CommentProps }) => {
           <div>
             {/* 내 댓글에만 수정, 삭제 버튼 뜨게 하는 작업 */}
             {user?.id === comment.user_id ? (
-              <div className="flex text-xs font-bold items-end gap-2">
+              <div className="flex font-bold items-end gap-2">
                 {isEditing ? (
                   <div className="flex gap-2">
                     <button
                       onClick={handleEditCancel}
-                      className="bg-selected-gray px-2 py-1 rounded-md"
+                      className="btn-feedform bg-selected-gray"
                     >
                       취소
                     </button>
                     <button
                       onClick={handleEditSubmit}
-                      className="bg-yellow-500 px-2 py-1 rounded-md"
+                      className="btn-feedform bg-yellow-500"
                     >
                       완료
                     </button>
@@ -129,13 +129,13 @@ const Comment = ({ comment }: { comment: CommentProps }) => {
                   <div className="flex gap-2">
                     <button
                       onClick={handleEdit}
-                      className="bg-gray-mint px-2 py-1 rounded-md hover:bg-black-blue"
+                      className="btn-feedform bg-gray-mint  hover:bg-black-blue"
                     >
                       수정
                     </button>
                     <button
                       onClick={handleDelete}
-                      className="bg-red-500 px-2 py-1 rounded-md hover:bg-selected-white"
+                      className="btn-feedform bg-red-500   hover:bg-red-400"
                     >
                       삭제
                     </button>

@@ -3,10 +3,19 @@ import supabase from "../utils/supabase";
 import useAuthStore from "../stores/useAuthStore";
 
 const Header = () => {
-  const { user } = useAuthStore();
+  // 전
+  // const { user } = useAuthStore();
+  // 후
+  const user = useAuthStore((state) => state.user);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    // 전
+    // await supabase.auth.signOut();
+    // 후
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      alert(`로그아웃에 실패했습니다. ${error.message}`);
+    }
 
     alert("로그아웃 되었습니다");
     navigate("/");
@@ -30,13 +39,13 @@ const Header = () => {
             <>
               <button
                 onClick={() => navigate("/login")}
-                className="text-sm text-selected-white border border-selected-white rounded-lg px-4 py-2 font-medium hover:bg-gray-mint"
+                className="btn-head hover:bg-gray-mint"
               >
                 Login
               </button>
               <button
                 onClick={() => navigate("/signup")}
-                className="text-sm text-selected-white border border-selected-white rounded-lg px-4 py-2 font-medium hover:bg-gray-mint"
+                className="btn-head hover:bg-gray-mint"
               >
                 SignUp
               </button>
@@ -51,7 +60,7 @@ const Header = () => {
               </button>
               <button
                 onClick={handleLogout}
-                className="text-sm text-selected-white border border-selected-white rounded-lg px-4 py-2 hover:bg-red-500 font-medium"
+                className="btn-head hover:bg-red-500"
               >
                 Logout
               </button>
