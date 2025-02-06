@@ -38,40 +38,45 @@ const MyPage = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setIsUploading(true);
-    const updateData = { nickname, img_url: previewImage };
+    try {
+      setIsUploading(true);
+      const updateData = { nickname, img_url: previewImage };
 
-    if (profileFile) {
-      // 이미지 이름을 고정하면 누가 누구 것인지 알 수가 없다 -> 추후에 가져올 때 문제 발생
-      // 확장자가 다를 때 깨질 수 있음
-      const fileExt = profileFile.name.split(".").pop();
-      // 경로 -> 유저 별로 다르게 만들 예정
-      const filePath = `${user?.id}/profile_${Date.now()}.${fileExt}`;
-      const { error } = await supabase.storage
-        .from("profile")
-        .upload(filePath, profileFile);
-      if (error) {
-        alert(`이미지 업로드에 실패했습니다. ${error.message}`);
-        setIsUploading(false);
-        return;
+      if (profileFile) {
+        // 이미지 이름을 고정하면 누가 누구 것인지 알 수가 없다 -> 추후에 가져올 때 문제 발생
+        // 확장자가 다를 때 깨질 수 있음
+        const fileExt = profileFile.name.split(".").pop();
+        // 경로 -> 유저 별로 다르게 만들 예정
+        const filePath = `${user?.id}/profile_${Date.now()}.${fileExt}`;
+        const { error } = await supabase.storage
+          .from("profile")
+          .upload(filePath, profileFile);
+        if (error) {
+          throw new Error(`이미지 업로드에 실패했습니다. ${error.message}`);
+        }
+
+        // 가져오는 방법
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from("profile").getPublicUrl(filePath);
+        // auth에도 넣어준다
+        updateData.img_url = publicUrl;
       }
+      // await supabase.auth.updateUser({ data: updateData });
 
-      // 가져오는 방법
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from("profile").getPublicUrl(filePath);
-      // auth에도 넣어준다
-      updateData.img_url = publicUrl;
+      // users 테이블에 넣는다
+      const {error:userError} = await supabase.from("users").update(updateData).eq("id", user?.id);
+      if(userError) {
+        throw new Error(`유저 정보 업데이트에 실패했습니다. ${userError.message}`)
+      }
+    } catch (error) {
+      alert(`저장에 실패했습니다. ${error}`);
+    } finally {
+      setIsUploading(false);
+      alert("변경 완료");
     }
-    
-    await supabase.auth.updateUser({ data: updateData });
-    
-    // users 테이블에 넣는다
-    await supabase.from("users").update(updateData).eq("id", user?.id);
-    setIsUploading(false);
-    
-    alert("변경 완료")
   };
+  // 연동시키는 방법, (주스탠드)탠스택쿼리로 하는 방법 > 셋유저로 주스탠드에 있는 유저정보를 업데이트하는 방법
 
   return (
     <section className="max-w-5xl mx-auto p-6">

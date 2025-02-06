@@ -86,7 +86,7 @@ const Signup = () => {
     }
 
     alert("회원가입에 성공했습니다");
-    navigate("/");
+    navigate("/login");
   };
 
   return (
