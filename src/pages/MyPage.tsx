@@ -3,7 +3,7 @@ import useAuthStore from "../stores/useAuthStore";
 import supabase from "../utils/supabase";
 
 const MyPage = () => {
-  const { user } = useAuthStore();
+  const { user, setUser } = useAuthStore();
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [profileFile, setProfileFile] = useState<File | null>(null);
   const [nickname, setNickname] = useState("");
@@ -39,6 +39,9 @@ const MyPage = () => {
     e.preventDefault();
 
     try {
+      if (!user) {
+        throw new Error("유저 정보가 없습니다.");
+      }
       setIsUploading(true);
       const updateData = { nickname, img_url: previewImage };
 
@@ -65,10 +68,22 @@ const MyPage = () => {
       // await supabase.auth.updateUser({ data: updateData });
 
       // users 테이블에 넣는다
-      const {error:userError} = await supabase.from("users").update(updateData).eq("id", user?.id);
-      if(userError) {
-        throw new Error(`유저 정보 업데이트에 실패했습니다. ${userError.message}`)
+      const { data: userData, error: userError } = await supabase
+        .from("users")
+        .update(updateData)
+        .eq("id", user?.id)
+        .select();
+      if (userError) {
+        throw new Error(
+          `유저 정보 업데이트에 실패했습니다. ${userError.message}`
+        );
       }
+      // user 정보 저장한 곳 === zustand -> 변경 x
+      setUser({
+        ...user,
+        nickname: userData[0].nickname,
+        img_url: userData[0].img_url,
+      })
     } catch (error) {
       alert(`저장에 실패했습니다. ${error}`);
     } finally {
