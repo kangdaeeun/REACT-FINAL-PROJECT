@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+    @apply bg-selected-gray
+}
+
+@layer utilities {
+    .btn-head {
+        @apply text-sm text-selected-white border border-selected-white rounded-lg px-4 py-2 font-medium;
+    }
+
+    .btn-feedform {
+        @apply px-2 py-1 rounded-md transition-colors duration-200;
+    }
+
+    .btn-form {
+        @apply text-lg font-bold rounded-md w-full h-[35px] ;
+    }
+}
