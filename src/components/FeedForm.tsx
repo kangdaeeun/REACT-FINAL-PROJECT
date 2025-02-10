@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import Btn from "./Btn";
+// import Btn from "./Btn";
 
 const FeedForm = ({
   purpose,
@@ -54,15 +54,18 @@ const FeedForm = ({
       </div>
       {/* 버튼 UI가 같아서 한번만 사용하는 방법 알아오기 > 한번 더 분리해서 사용하라는 뜻 */}
       {purpose === "작성" ? (
-        <div>
-          <Btn BtnName="작성" />
-        </div>
+        // <div>
+        //   <Btn BtnName="작성" />
+        // </div>
+        <button className="btn-form bg-gray-mint hover:bg-black-blue">작성</button>
       ) : (
         <div className="flex flex-row gap-2">
-          <Btn BtnName="수정하기" />
+          {/* <Btn BtnName="수정하기" /> */}
+          <button className="btn-form bg-gray-mint hover:bg-black-blue">수정하기</button>
           <button type={"button"}
             onClick={handleCancel}
-            className="text-lg font-bold bg-red-500 rounded-md w-full h-[35px] hover:bg-selected-white flex justify-center items-center"
+            // className="text-lg font-bold bg-red-500 rounded-md w-full h-[35px] hover:bg-selected-white flex justify-center items-center"
+            className="btn-form bg-red-500 hover:bg-selected-white flex justify-center items-center"
           >
             취소하기
           </button>

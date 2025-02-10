@@ -9,7 +9,8 @@ const Home = () => {
     queryFn: getFeeds,
   });
 
-  if (isLoading) return <div>로딩 중 ...</div>;
+  // 스켈레톤 적용 전
+  // if (isLoading) return <div>로딩 중 ...</div>;
   if (error) return <div>에러 발생: {error.message}</div>;
 
   return (
@@ -24,9 +25,17 @@ const Home = () => {
         </Link>
       </div>
       <div className="flex flex-col gap-4">
-        {data?.map((item) => (
-          <Feed key={item.id} feed={item} />
-        ))}
+        {/* 스켈레톤 적용 후 */}
+        {isLoading ? (
+          <div className="flex flex-col gap-4">
+            <div className="w-full h-32 bg-gray-200 animate-pulse"></div>
+            <div className="w-full h-32 bg-gray-200 animate-pulse"></div>
+            <div className="w-full h-32 bg-gray-200 animate-pulse"></div>
+            <div className="w-full h-32 bg-gray-200 animate-pulse"></div>
+          </div>
+        ) : (
+          data?.map((item) => <Feed key={item.id} feed={item} />)
+        )}
       </div>
     </>
   );

@@ -22,8 +22,11 @@ const CreatePage = () => {
   const addFeedMutation = useMutation({
     mutationFn: async () => {
       if (!user) {
-        alert("로그인 후 이용해주세요");
-        return;
+        // 전
+        // alert("로그인 후 이용해주세요");
+        // 후
+        throw new Error("로그인 후 이용해주세요")
+        // return;
       }
       await addFeed({ title, content, userId: user.id });
     },
