@@ -56,6 +56,7 @@ const Header = () => {
                 onClick={() => navigate("/mypage")}
                 className="text-sm text-selected-white hover:text-black"
               >
+                {/* {user.img_url} */}
                 {user.nickname}
               </button>
               <button
