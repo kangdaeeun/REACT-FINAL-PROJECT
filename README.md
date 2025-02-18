@@ -7,8 +7,7 @@
 3. [개발기간](#개발기간) 
 4. [기술스택](#기술스택) 
 5. [서비스 구조](#서비스-구조) 
-6. [프로젝트 파일 구조](#프로젝트-파일-구조) 
-7. [Trouble Shooting](#trouble-shooting)
+6. [Trouble Shooting](#trouble-shooting)
 
 ## 프로젝트 목표
 1. 프론트엔드 필수 기술 스택의 실전 활용 경험
@@ -101,55 +100,6 @@ title, content, user_id, created_at
 content, feed_id, user_id, created_at
 * Upvotes Table: 추천 정보 관
 feed_id, user_id
-  
-## 프로젝트 파일 구조
-react-final-project/
-├── public/
-├── src/
-│   ├── assets/
-│   ├── api/
-│   │   └── commentApi.ts
-│   │   └── feedApi.ts
-│   │   └── upvoteApi.ts
-│   ├── components/
-│   │   └── Comment.tsx
-│   │   └── CommentForm.tsx
-│   │   └── Feed.tsx
-│   │   └── FeedForm.tsx
-│   │   └── Layout.tsx
-│   │   └── Header.tsx
-│   ├── pages/
-│   │   └── CreatePage.tsx
-│   │   └── Detail.tsx
-│   │   └── Home.tsx
-│   │   └── Login.tsx
-│   │   └── MyPage.tsx
-│   │   └── Signup.tsx
-│   │   └── UpdatePage.tsx
-│   ├── providers/
-│   │   └── AuthProvider.ts
-│   │   └── QueryProvider.ts
-│   ├── stores/
-│   │   └── useAuthStore.ts
-│   ├── utils/
-│   │   └── supabase.ts
-│   ├── App.jsx
-│   ├── App.css
-│   ├── index.css
-│   └── main.jsx
-├── .eslintrc.cjs
-├── .gitignore
-├── .env.local
-├── postcss.config.js
-├── tailwind.config.js
-├── index.html
-├── tsconfig.app.json
-├── tsconfig.json
-├── tsconfig.node.json
-├── package.json
-├── README.md
-└── vite.config.js
-└── yarn.lock
 
 ## Trouble Shooting
 *
